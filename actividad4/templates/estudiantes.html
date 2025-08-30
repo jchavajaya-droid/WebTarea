@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de Estudiantes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<header class="bg-secondary text-white text-center py-4">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a href="{% url 'inicio' %}">
+      <img src="{% static 'logo.png' %}" alt="Logo UMG" class="img-fluid" style="max-height: 80px;">
+    </a>
+    <h1 class="fs-3 m-0">UNIVERSIDAD MARIANO GÁLVEZ DE GUATEMALA</h1>
+  </div>
+</header>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'inicio' %}">INICIO</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
+      aria-controls="menu" aria-expanded="false" aria-label="Menú de navegación">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'estudiantes' %}">ESTUDIANTES</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'administradores' %}">ADMINISTRADORES</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'acerca' %}">ACERCA DE</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-5">
+  <h2 class="text-center text-dark mb-4">Listado de Estudiantes de la Universidad Mariano Gálvez</h2>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover text-center align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">Nombre Completo</th>
+          <th scope="col">Departamento</th>
+          <th scope="col">Carrera</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Andrea Sofía Martínez López</td><td>Guatemala</td><td>Ingeniería en Sistemas</td></tr>
+        <tr><td>2</td><td>Wendy Magdalena Navichoc</td><td>Solola</td><td>Medicina</td></tr>
+        <tr><td>3</td><td>Juan Carlos Gómez Pérez</td><td>Quiche</td><td>Arquitectura</td></tr>
+        <tr><td>4</td><td>Luis Fernando Soto Aguilar</td><td>Alta Verapaz</td><td>Derecho</td></tr>
+        <tr><td>5</td><td>Daniela Fernanda Rojas Díaz</td><td>Chiquimula</td><td>Psicología</td></tr>
+        <tr><td>6</td><td>Kevin Alexander Méndez Ruiz</td><td>Escuintla</td><td>Administración de Empresas</td></tr>
+        <tr><td>7</td><td>Ana Lucía Torres Marroquín</td><td>Jalapa</td><td>Contaduría Pública y Auditoría</td></tr>
+        <tr><td>8</td><td>Pablo Estuardo Reyes Cano</td><td>San Marcos</td><td>Ingeniería Civil</td></tr>
+        <tr><td>9</td><td>Brenda Lizeth Chávez Ortiz</td><td>Peten</td><td>Enfermería</td></tr>
+        <tr><td>10</td><td>Diego Armando Herrera Salguero</td><td>Huehuetenango</td><td>Ciencias de la Comunicación</td></tr>
+        <tr><td>11</td><td>Gabriela Estefanía Ruiz</td><td>Totonicapán</td><td>Biología</td></tr>
+        <tr><td>12</td><td>Javier Antonio Rojas</td><td>Zacapa</td><td>Economía</td></tr>
+        <tr><td>13</td><td>Valeria Isabel Soto</td><td>Izabal</td><td>Relaciones Internacionales</td></tr>
+        <tr><td>14</td><td>David Sebastián Aguilar</td><td>Alta Verapaz</td><td>Periodismo</td></tr>
+        <tr><td>15</td><td>Camila Alejandra Cruz</td><td>San Marcos</td><td>Enfermería</td></tr>
+        <tr><td>16</td><td>Esteban Nicolás Chávez</td><td>Retalhuleu</td><td>Física</td></tr>
+        <tr><td>17</td><td>Paola Teresa Romero</td><td>Chiquimula</td><td>Ingeniería Ambiental</td></tr>
+        <tr><td>18</td><td>Ricardo Javier Torres</td><td>Baja Verapaz</td><td>Ingeniería Electrónica</td></tr>
+        <tr><td>19</td><td>Melissa Patricia Vásquez</td><td>El Progreso</td><td>Diseño Gráfico</td></tr>
+        <tr><td>20</td><td>Óscar Daniel Pineda</td><td>Guatemala</td><td>Matemática Aplicada</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

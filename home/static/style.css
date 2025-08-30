@@ -1,0 +1,67 @@
+body {
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: rgb(255, 255, 255);
+}
+
+p {
+  margin: 20px;
+}
+
+.img-derecha {
+    float: right;
+    width: 200px;
+    margin-left: 10px;
+  }
+
+  .menu {
+  padding-top: 100px; /* Ajusta esto según el alto de tu imagen */
+  text-align: center;
+  background-color: #f0f0f0;
+}
+
+.encabezado {
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+.menu a {
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #333;
+}
+
+p {
+  margin-top: 30px;     /* margen arriba */
+  margin-right: 30px;   /* margen derecha */
+  margin-bottom: 30px;  /* margen abajo */
+  margin-left: 30px;    /* margen izquierda */
+  text-align: justify;
+}
+
+h2 {
+  color: rgb(0, 0, 0);
+  margin-top: 30px;     /* margen arriba */
+  margin-right: 30px;   /* margen derecha */
+  margin-bottom: 30px;  /* margen abajo */
+  margin-left: 30px;    /* margen izquierda */
+  text-align: center;
+}
+
+.tabla-centro {
+  margin: auto;
+}
+
+tr {
+text-align: center;
+}
+
+td {
+    padding: 10px 20px;
+    letter-spacing: 1px;
+    line-height: 1.6;
+}
