@@ -1,0 +1,15 @@
+# Entorno virtual
+venv/
+*.pyc
+__pycache__/
+
+# Archivos de sistema
+*.DS_Store
+*.idea/
+*.vscode/
+
+# Base de datos SQLite
+db.sqlite3
+
+# Archivos estáticos generados
+staticfiles/

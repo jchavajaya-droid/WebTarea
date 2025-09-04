@@ -1,72 +1,51 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Universidad Mariano Gálvez</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}  {# Esta línea es indispensable para usar {% static %} #}
 
-<header class="bg-secondary text-white text-center py-4">
-  <div class="container d-flex align-items-center justify-content-between">
-    <a href="{% url 'inicio' %}">
-      <img src="{% static 'logo.png' %}" alt="Logo UMG" class="img-fluid" style="max-height: 80px;">
-    </a>
-    <h1 class="fs-3 m-0">UNIVERSIDAD MARIANO GÁLVEZ DE GUATEMALA</h1>
+{% block title %}Inicio - Universidad Mariano Gálvez{% endblock %}
+
+{% block content %}
+
+<!-- Header con imagen de fondo -->
+<header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
+  <div class="text-center my-5">
+    <img class="img-fluid rounded-circle mb-4" src="{% static 'assets/logo.png' %}" alt="Logo UMG" style="max-height:150px;" />
+    <h1 class="text-white fs-3 fw-bolder">Bienvenido a la Universidad Mariano Gálvez</h1>
+    <p class="text-white-50 mb-0">Formando profesionales con excelencia académica</p>
   </div>
 </header>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<!-- Sección Historia -->
+<section class="py-5">
   <div class="container">
-    <a class="navbar-brand" href="{% url 'inicio' %}">INICIO</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
-      aria-controls="menu" aria-expanded="false" aria-label="Menú de navegación">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="menu">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="{% url 'estudiantes' %}">ESTUDIANTES</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'administradores' %}">ADMINISTRADORES</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'acerca' %}">ACERCA DE</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<main class="container my-5">
-  <section class="mb-5">
-    <h2 class="text-dark">Historia</h2>
+    <h2 class="text-dark mb-4">Historia</h2>
     <p>El primer ciclo académico se inició el 2 de marzo de 1966 en acto solemne en el que el Rector de la 
-      Universidad de San Carlos de Guatemala, pronunció el discurso de salutación y el primer Rector de la 
+      Universidad de San Carlos de Guatemala pronunció el discurso de salutación y el primer Rector de la 
       naciente Universidad pronunció el discurso de inauguración.</p>
     <p>En 1968, la Universidad Mariano Gálvez abrió las carreras de Derecho, Economía, Ingeniería Civil, 
       Administración de Empresas, Teología y Humanidades. Posteriormente se abrieron carreras cortas en 
       Pedagogía y Artes Plásticas, Gerencia, Economía Aduanera y Visita Médica.</p>
-    <p>Previendo el desarrollo socio económico del país, la Universidad se propone a formar profesionales que se 
+    <p>Previendo el desarrollo socioeconómico del país, la Universidad se propone a formar profesionales que se 
       requieran en el campo de los recursos humanos, de ahí que la formación de los cuadros intermedios es la 
       preocupación del futuro, tanto para la Agricultura, la Industria, como para otros servicios.</p>
-    <p>Una de las primeras ubicaciones físicas de la Universidad Doctor Mariano Gálvez de Guatemala estuvo en 
-      7ª. Av. "A" 6-70, Zona 02, el teléfono fue: 80-8-46, era un área residencial de quietud, de fácil acceso, 
-      con los servicios más indispensables a inmediaciones del edificio, así como centros de recreación. 
-      El edificio que actualmente ocupó la Universidad tuvo una extensión total de 5,000 metros cuadrados.</p>
-    <p>En 1972 la Universidad inició su traslado al Campus Central actual, donde ha desarrollado una infraestructura 
-      física que incluye complejos para Observatorio, Biblioteca, un Teatro al aire libre, jardines, un bosque 
-      ecológico, un centro de cómputo e instalaciones deportivas.</p>
-  </section>
+  </div>
+</section>
 
-  <section>
-    <h2 class="text-dark">Actualidad</h2>
-    <p>La Universidad Mariano Gálvez de Guatemala, actualmente cuenta con 13 facultades, 147 carreras universitarias 
+<!-- Sección Actualidad -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-dark mb-4">Actualidad</h2>
+    <p>La Universidad Mariano Gálvez de Guatemala actualmente cuenta con 13 facultades, 147 carreras universitarias 
       en diferentes grados académicos, 5 carreras acreditadas internacionalmente, 3 laboratorios de última generación 
       en las áreas de investigación e innovación (CITE, I2QB3, IN3), 20 laboratorios de cómputo, 5 Campus Universitarios 
       (Campus Central, Jutiapa, Huehuetenango, Quetzaltenango y Villa Nueva) con 36 Centros Universitarios en todo el país.</p>
-  </section>
-</main>
+  </div>
+</section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<!-- Imagen decorativa al final -->
+<div class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/4ulffa6qoKA/1200x800')">
+  <div style="height: 20rem"></div>
+</div>
+
+{% endblock %}
+
+
