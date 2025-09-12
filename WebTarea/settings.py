@@ -79,9 +79,13 @@ WSGI_APPLICATION = 'WebTarea.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+  'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'revista_db',   # Nombre de la BD en MySQL
+        'USER': 'root',         # Usuario de MySQL
+        'PASSWORD': 'root',  # Contraseña
+        'HOST': 'localhost',    # Servidor
+        'PORT': '3306',         # Puerto por defecto de MySQL
     }
 }
 

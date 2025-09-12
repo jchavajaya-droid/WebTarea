@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Publicacion
 
 def inicio(request):
     return render(request, 'inicio.html')
@@ -11,3 +12,7 @@ def administradores(request):
 
 def acerca(request):
     return render(request, 'acerca.html')
+
+def publicaciones(request):
+    publicaciones = Publicacion.objects.all()
+    return render(request, 'publicaciones.html', {'publicaciones': publicaciones})
