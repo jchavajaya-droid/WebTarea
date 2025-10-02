@@ -1,31 +1,36 @@
-{% extends 'base.html' %}
-
-{% block title %}Administradores - Universidad Mariano Gálvez{% endblock %}
+{% extends "base.html" %}
 
 {% block content %}
-<h2 class="text-center text-dark mb-4">Listado de Administradores de la Universidad Mariano Gálvez</h2>
+<div class="container mt-4">
+    <h2>Lista de Administradores</h2>
 
-<div class="table-responsive">
-    <table class="table table-striped table-bordered table-hover text-center align-middle">
+    <a href="{% url 'agregar_administrador' %}" class="btn btn-primary mb-3">Agregar Administrador</a>
+
+    <table class="table table-striped">
         <thead class="table-dark">
             <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Nombre Completo</th>
-                <th scope="col">Departamento</th>
-                <th scope="col">Carrera</th>
+                <th>Nombre Completo</th>
+                <th>Carrera</th>
+                <th>Correo</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr><td>1</td><td>Ing. Laura Beatriz Castillo Rivas</td><td>Guatemala</td><td>Ingeniería en Sistemas</td></tr>
-            <tr><td>2</td><td>Dr. Jose Eduardo López Martínez</td><td>Solola</td><td>Medicina</td></tr>
-            <tr><td>3</td><td>Arq. Karla Paola Hernández Gómez</td><td>Quiche</td><td>Arquitectura</td></tr>
-            <tr><td>4</td><td>Ab. Cindy Marisol Torres Lopez</td><td>Alta Verapaz</td><td>Derecho</td></tr>
-            <tr><td>5</td><td>Pscol. Luis Enrique Ramos Calderon</td><td>Chiquimula</td><td>Psicología</td></tr>
-            <tr><td>6</td><td>Lic. María Fernanda Soto Perez</td><td>Escuintla</td><td>Administración de Empresas</td></tr>
-            <tr><td>7</td><td>CP Kevin Josue Rivera Mendenez</td><td>Jalapa</td><td>Contaduría Pública y Auditoría</td></tr>
-            <tr><td>8</td><td>Ing. Andrea Noemí Lopez Rodriguez</td><td>San Marcos</td><td>Ingeniería Civil</td></tr>
-            <tr><td>9</td><td>Enf. Pablo Andres Mendez Salazar</td><td>Peten</td><td>Enfermería</td></tr>
-            <tr><td>10</td><td>Lic. Mario Alejandro Diaz Estrada</td><td>Huehuetenango</td><td>Ciencias de la Comunicación</td></tr>
+            {% for administrador in administradores %}
+            <tr>
+                <td>{{ administrador.nombre_completo }}</td>
+                <td>{{ administrador.carrera }}</td>
+                <td>{{ administrador.correo }}</td>
+                <td>
+                    <a href="{% url 'editar_administrador' administrador.id %}" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="{% url 'ver_administrador' administrador.id %}" class="btn btn-sm btn-info">Ver</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">No hay administradores registrados.</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>

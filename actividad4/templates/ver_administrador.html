@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Detalles del Administrador</h2>
+    <p><strong>Nombre Completo:</strong> {{ administrador.nombre_completo }}</p>
+    <p><strong>Carrera:</strong> {{ administrador.carrera }}</p>
+    <p><strong>Correo:</strong> {{ administrador.correo }}</p>
+    <a href="{% url 'lista_administradores' %}" class="btn btn-secondary mt-3">Volver a la lista</a>
+</div>
+{% endblock %}
+

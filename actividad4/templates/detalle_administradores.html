@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Detalle Administradores{% endblock %}
+{% block content %}
+<h2>Detalle de Administradores</h2>
+<ul class="list-group">
+  <li class="list-group-item"><strong>Nombre completo:</strong> {{ administradores.nombre_completo }}</li>
+  <li class="list-group-item"><strong>Carrera:</strong> {{ administradores.carrera }}</li>
+  <li class="list-group-item"><strong>Correo:</strong> {{ administradores.correo }}</li>
+</ul>
+<a href="{% url 'administradores' %}" class="btn btn-secondary mt-3">Volver</a>
+{% endblock %}

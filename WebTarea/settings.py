@@ -59,7 +59,7 @@ ROOT_URLCONF = 'WebTarea.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'actividad4' / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'WebTarea.wsgi.application'
 DATABASES = {
   'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'revista_db',   # Nombre de la BD en MySQL
+        'NAME': 'general_bd',   # Nombre de la BD en MySQL
         'USER': 'root',         # Usuario de MySQL
         'PASSWORD': 'root',  # Contraseña
         'HOST': 'localhost',    # Servidor
