@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Estudiante, Administrador
-from .forms import EstudianteForm, AdministradorForm
+from .forms import EstudianteForm, AdministradorForm, RegistroUsuarioForm
+from django.contrib.auth import login
+
 
 # ---------- ESTUDIANTES ----------    
 def inicio(request):
-    return render(request, 'inicio.html')  # plantilla de bienvenida
+    return render(request, 'inicio.html')
 
 def lista_estudiantes(request):
-    estudiantes = Estudiante.objects.all()  # Trae todos los estudiantes
+    estudiantes = Estudiante.objects.all()  
     return render(request, 'estudiantes.html', {'estudiantes': estudiantes})
 
 def agregar_estudiante(request):
@@ -15,7 +17,7 @@ def agregar_estudiante(request):
         form = EstudianteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('lista_estudiantes')  # Redirige a la vista que ya carga todos los estudiantes
+            return redirect('lista_estudiantes')
     else:
         form = EstudianteForm()
     return render(request, 'agregar_editar_estudiantes.html', {'form': form, 'titulo': 'Agregar Estudiante'})
@@ -39,7 +41,7 @@ def ver_estudiante(request, id):
 
 # ---------- ADMINISTRADORES ----------
 def lista_administradores(request):
-    administradores = Administrador.objects.all()  # Trae todos los administradores
+    administradores = Administrador.objects.all() 
     return render(request, 'administradores.html', {'administradores': administradores})
 
 def agregar_administrador(request):
@@ -66,3 +68,17 @@ def editar_administrador(request, id):
 def ver_administrador(request, id):
     admin = get_object_or_404(Administrador, id=id)
     return render(request, 'ver_administrador.html', {'administrador': admin})
+
+
+
+#---------- REGISTRO DE USUARIOS ----------
+def registrar_usuario(request):
+    if request.method == 'POST':
+        form = RegistroUsuarioForm(request.POST)
+        if form.is_valid():
+            usuario = form.save()
+            login(request, usuario)  
+            return redirect('inicio')  
+    else:
+        form = RegistroUsuarioForm()
+    return render(request, 'registrar_usuario.html', {'form': form})

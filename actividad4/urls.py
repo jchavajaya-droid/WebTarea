@@ -14,4 +14,7 @@ urlpatterns = [
     path('administradores/agregar/', views.agregar_administrador, name='agregar_administrador'),
     path('administradores/editar/<int:id>/', views.editar_administrador, name='editar_administrador'),
     path('administradores/ver/<int:id>/', views.ver_administrador, name='ver_administrador'),
+
+    path('registrar/', views.registrar_usuario, name='registrar_usuario'),
+
 ]
