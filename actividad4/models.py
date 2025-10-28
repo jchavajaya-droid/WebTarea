@@ -19,11 +19,11 @@ class Administrador(models.Model):
         return self.nombre_completo
 
 class Publicacion(models.Model):
-    titulo = models.CharField(max_length=100)
+    titulo = models.CharField(max_length=200)
     contenido = models.TextField()
-    autor = models.ForeignKey(User, on_delete=models.CASCADE)  # ← este campo
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='publicaciones_creadas')
     autorizada = models.BooleanField(default=False)
+    autorizado_por = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='publicaciones_autorizadas')
 
     def __str__(self):
-        return f"{self.titulo} - {self.autor.username}"
+        return self.titulo

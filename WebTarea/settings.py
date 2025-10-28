@@ -43,6 +43,13 @@ INSTALLED_APPS = [
     'actividad4'
 ]
 
+# Redirecciones después de login/logout
+LOGIN_REDIRECT_URL = 'inicio'
+LOGOUT_REDIRECT_URL = 'inicio'
+
+# Para usar el login requerido en vistas
+LOGIN_URL = 'login'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

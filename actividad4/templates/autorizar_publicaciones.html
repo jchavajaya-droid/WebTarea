@@ -1,0 +1,11 @@
+<h1>Publicidades Pendientes</h1>
+{% for pub in publicaciones %}
+  <div>
+    <h3>{{ pub.titulo }}</h3>
+    <p>{{ pub.contenido }}</p>
+    <p>Autor: {{ pub.autor.username }}</p>
+    <a href="{% url 'autorizar_publicidad_id' pub.id %}" class="btn btn-success">Autorizar</a>
+  </div>
+{% empty %}
+  <p>No hay publicidades pendientes.</p>
+{% endfor %}

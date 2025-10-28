@@ -1,24 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from .models import Estudiante, Administrador, Publicacion
 from .forms import EstudianteForm, AdministradorForm, RegistroUsuarioForm, PublicacionForm
-from django.contrib.auth import login
 
-
-
-# ---------- ESTUDIANTES ----------    
+# ---------- ESTUDIANTES ----------
 def inicio(request):
     return render(request, 'inicio.html')
 
 def lista_estudiantes(request):
-    filtro = request.GET.get('filtro', '')  # obtiene el texto del campo de búsqueda
+    filtro = request.GET.get('filtro', '').strip()
     if filtro:
         estudiantes = Estudiante.objects.filter(
-            nombre_completo__icontains=filtro
-        ) | Estudiante.objects.filter(
-            carrera__icontains=filtro
-        ) | Estudiante.objects.filter(
-            carnet__icontains=filtro
+            Q(nombre_completo__icontains=filtro) |
+            Q(carrera__icontains=filtro) |
+            Q(carnet__icontains=filtro)
         )
     else:
         estudiantes = Estudiante.objects.all()
@@ -49,37 +47,60 @@ def ver_estudiante(request, id):
     estudiante = get_object_or_404(Estudiante, id=id)
     return render(request, 'ver_estudiante.html', {'estudiante': estudiante})
 
-def crear_publicacion(request):
-    if request.method == 'POST':
+
+# ---------- PUBLICACIONES ----------
+@login_required
+def crear_publicaciones(request):
+    if request.method == "POST":
         form = PublicacionForm(request.POST)
         if form.is_valid():
             publicacion = form.save(commit=False)
-            publicacion.estudiante = request.user
+            # Asignamos el usuario logueado como autor
+            publicacion.autor = request.user
             publicacion.save()
-            return redirect('mis_publicaciones')
+            return redirect('publicaciones')  # Redirige a la lista de publicaciones
     else:
         form = PublicacionForm()
-    return render(request, 'crear_publicacion.html', {'form': form})
+    
+    return render(request, 'crear_publicaciones.html', {'form': form})
 
+@login_required
+def publicaciones(request):
+    """Mostrar publicaciones según usuario"""
+    if request.user.is_staff:
+        publicaciones = Publicacion.objects.all()
+    else:
+        publicaciones = Publicacion.objects.filter(autorizada=True)
+    return render(request, 'publicaciones.html', {'publicaciones': publicaciones})
+
+@staff_member_required
+def lista_publicaciones_pendientes(request):
+    """Admin ve publicaciones pendientes de autorización"""
+    publicaciones = Publicacion.objects.filter(autorizada=False)
+    return render(request, 'autorizar_publicaciones.html', {'publicaciones': publicaciones})
+
+@staff_member_required
+def autorizar_publicaciones(request, pub_id):
+    """Admin autoriza una publicación"""
+    publicacion = get_object_or_404(Publicacion, id=pub_id)
+    publicacion.autorizada = True
+    publicacion.autorizado_por = request.user
+    publicacion.save()
+    return redirect('lista_publicaciones_pendientes')
 
 
 # ---------- ADMINISTRADORES ----------
 def lista_administradores(request):
-    filtro = request.GET.get('filtro', '').strip()  # obtiene el texto del campo de búsqueda y elimina espacios
+    filtro = request.GET.get('filtro', '').strip()
     if filtro:
         administradores = Administrador.objects.filter(
             Q(nombre_completo__icontains=filtro) |
             Q(carrera__icontains=filtro) |
-            Q(correo__icontains=filtro) |
-            Q(carrera__icontains=filtro)
+            Q(correo__icontains=filtro)
         )
     else:
         administradores = Administrador.objects.all()
-    return render(
-        request,
-        'lista_administradores.html', 
-        {'administradores': administradores, 'filtro': filtro}
-        )
+    return render(request, 'lista_administradores.html', {'administradores': administradores, 'filtro': filtro})
 
 def agregar_administrador(request):
     if request.method == 'POST':
@@ -92,90 +113,29 @@ def agregar_administrador(request):
     return render(request, 'agregar_editar_administrador.html', {'form': form, 'titulo': 'Agregar Administrador'})
 
 def editar_administrador(request, id):
-    admin = get_object_or_404(Administrador, id=id)
+    administrador = get_object_or_404(Administrador, id=id)
     if request.method == 'POST':
-        form = AdministradorForm(request.POST, instance=admin)
+        form = AdministradorForm(request.POST, instance=administrador)
         if form.is_valid():
             form.save()
             return redirect('lista_administradores')
     else:
-        form = AdministradorForm(instance=admin)
+        form = AdministradorForm(instance=administrador)
     return render(request, 'agregar_editar_administrador.html', {'form': form, 'titulo': 'Editar Administrador'})
 
 def ver_administrador(request, id):
-    admin = get_object_or_404(Administrador, id=id)
-    return render(request, 'ver_administrador.html', {'administrador': admin})
-
-def administrar_publicaciones(request):
-    publicaciones = Publicacion.objects.filter(aprobada=False)
-    if request.method == 'POST':
-        publicacion_id = request.POST.get('publicacion_id')
-        publicacion = Publicacion.objects.get(id=publicacion_id)
-        publicacion.aprobada = True
-        publicacion.save()
-        return redirect('administrar_publicaciones')
-    return render(request, 'administrar_publicaciones.html', {'publicaciones': publicaciones})
-
-def es_admin(user):
-    return user.is_staff
-
-def autorizar_publicacion(request, pub_id):
-    if request.user.is_staff:
-        pub = get_object_or_404(Publicacion, id=pub_id)
-        pub.autorizada = True
-        pub.save()
-    return redirect('publicaciones')  # redirige a la lista de publicaciones
-
-def publicaciones(request):
-    # Estudiantes solo ven publicaciones autorizadas
-    if request.user.is_staff:
-        publicaciones = Publicacion.objects.all()  # Admin ve todas
-    else:
-        publicaciones = Publicacion.objects.filter(autorizada=True)
-    
-    if request.method == 'POST':
-        form = PublicacionForm(request.POST)
-        if form.is_valid():
-            pub = form.save(commit=False)
-            pub.autor = request.user
-            pub.save()
-            return redirect('publicaciones')
-    else:
-        form = PublicacionForm()
-    
-    context = {'publicaciones': publicaciones, 'form': form}
-    return render(request, 'publicaciones.html', context)
-
-def crear_o_editar_publicacion(request, pub_id=None):
-    if pub_id:
-        pub = get_object_or_404(Publicacion, id=pub_id)
-        if request.user != pub.autor and not request.user.is_staff:
-            return redirect('administrar_publicaciones')
-    else:
-        pub = None
-
-    if request.method == 'POST':
-        form = PublicacionForm(request.POST, instance=pub)
-        if form.is_valid():
-            nueva_pub = form.save(commit=False)
-            if not pub:  # Si es creación
-                nueva_pub.autor = request.user
-            nueva_pub.save()
-            return redirect('administrar_publicaciones')
-    else:
-        form = PublicacionForm(instance=pub)
-
-    return render(request, 'crear_publicaciones.html', {'form': form, 'pub': pub})
+    administrador = get_object_or_404(Administrador, id=id)
+    return render(request, 'ver_administrador.html', {'administrador': administrador})
 
 
-#---------- REGISTRO DE USUARIOS ----------
+# ---------- REGISTRO DE USUARIOS ----------
 def registrar_usuario(request):
     if request.method == 'POST':
         form = RegistroUsuarioForm(request.POST)
         if form.is_valid():
             usuario = form.save()
-            login(request, usuario)  
-            return redirect('inicio')  
+            login(request, usuario)
+            return redirect('inicio')
     else:
         form = RegistroUsuarioForm()
     return render(request, 'registrar_usuario.html', {'form': form})
