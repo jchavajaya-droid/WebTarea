@@ -1,0 +1,19 @@
+<h1>Publicaciones Pendientes</h1>
+{% for pub in publicaciones %}
+  <div>
+    <h3>{{ pub.titulo }}</h3>
+    <p>{{ pub.contenido }}</p>
+    
+    <!-- Botón para aprobar -->
+    <form method="post" style="display:inline;">
+      {% csrf_token %}
+      <input type="hidden" name="publicacion_id" value="{{ pub.id }}">
+      <button type="submit">Aprobar</button>
+    </form>
+
+    <!-- Botón para editar -->
+    <a href="{% url 'editar_publicacion' pub.id %}" class="btn btn-warning">Editar</a>
+  </div>
+{% empty %}
+  <p>No hay publicaciones pendientes</p>
+{% endfor %}

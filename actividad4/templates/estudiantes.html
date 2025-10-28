@@ -4,6 +4,12 @@
 <div class="container mt-4">
     <h2>Lista de Estudiantes</h2>
 
+    <form method="get" class="d-flex mb-3">
+        <input type="text" name="filtro" class="form-control me-2" placeholder="Buscar por nombre, carrera o carnet"
+               value="{{ filtro }}">
+        <button type="submit" class="btn btn-secondary">Filtrar</button>
+    </form>
+
     <a href="{% url 'agregar_estudiante' %}" class="btn btn-primary mb-3">Agregar Estudiante</a>
 
     <table class="table table-striped">

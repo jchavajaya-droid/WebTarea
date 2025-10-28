@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Publicaciones{% endblock %}
+
+{% block content %}
+<h2>Publicaciones</h2>
+
+{% if user.is_authenticated %}
+  <h4>Crear nueva publicación</h4>
+  <form method="post" class="mb-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Publicar</button>
+  </form>
+{% endif %}
+
+<h4>Lista de publicaciones</h4>
+<ul class="list-group">
+  {% for pub in publicaciones %}
+    <li class="list-group-item">
+      <strong>{{ pub.titulo }}</strong> por {{ pub.autor.username }} <br>
+      {{ pub.contenido }} <br>
+      <small>Creada: {{ pub.fecha_creacion }}</small>
+      {% if user.is_staff and not pub.autorizada %}
+        <a href="{% url 'autorizar_publicacion' pub.id %}" class="btn btn-success btn-sm ms-2">Autorizar</a>
+      {% elif pub.autorizada %}
+        <span class="badge bg-success ms-2">Autorizada</span>
+      {% endif %}
+    </li>
+  {% empty %}
+    <li class="list-group-item">No hay publicaciones aún.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

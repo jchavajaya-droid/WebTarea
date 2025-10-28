@@ -3,22 +3,29 @@
 {% block content %}
 <div class="container mt-4">
     <h2>Lista de Administradores</h2>
+    
+    <form method="get" class="d-flex mb-3">
+        <input type="text" name="filtro" class="form-control me-2" placeholder="Buscar por nombre, carrera o correo"
+               value="{{ filtro }}">
+        <button type="submit" class="btn btn-secondary">Filtrar</button>
+    </form>
+
     <a href="{% url 'agregar_administrador' %}" class="btn btn-primary mb-3">Agregar Administrador</a>
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
             <tr>
-                <th>ID</th>
-                <th>Nombre</th>
+                <th>Nombre Completo</th>
                 <th>Email</th>
+                <th>Carrera</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         {% for admin in administradores %}
             <tr>
-                <td>{{ admin.id }}</td>
-                <td>{{ admin.nombre }}</td>
-                <td>{{ admin.email }}</td>
+                <td>{{ admin.nombre_completo }}</td>
+                <td>{{ admin.correo }}</td>
+                <td>{{ admin.carrera }}</td>
                 <td>
                     <a href="{% url 'ver_administrador' admin.id %}" class="btn btn-info btn-sm">Ver</a>
                     <a href="{% url 'editar_administrador' admin.id %}" class="btn btn-warning btn-sm">Modificar</a>
